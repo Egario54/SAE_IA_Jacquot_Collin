@@ -12,8 +12,6 @@ import static javax.imageio.ImageIO.write;
 
 public class Main_Q1 {
     public static void main(String[] args) throws IOException {
-
-        // fais moi un file pouvant être utilisé par bufferedImage avec imageUrl
         File file = new File("img/images_fleur/copie_rouge.png");
         BufferedImage copie = read(file);
 

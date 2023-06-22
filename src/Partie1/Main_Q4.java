@@ -9,9 +9,9 @@ import java.util.Arrays;
 import static javax.imageio.ImageIO.read;
 import static javax.imageio.ImageIO.write;
 
-public class Main_Q3 {
+public class Main_Q4 {
     public static void main(String[] args) throws IOException {
-        File file = new File("img/images_fleur/originale.jpg");
+        File file = new File("img/images_fleur/copie.png");
         BufferedImage copie = read(file);
 
         int width = copie.getWidth();
@@ -20,12 +20,11 @@ public class Main_Q3 {
         for(int i = 0; i<width; i++){
             for(int j = 0; j<height; j++){
                 int[] couleurs = separerRGB(copie.getRGB(i,j));
-                int gris = 0;
-                for (int k = 0; k < couleurs.length; k++) {
-                    gris += couleurs[k];
-                }
-                int g = gris / couleurs.length;
-                imgCopie.setRGB(i, j, new Color(g,g,g).getRGB());
+                int r = couleurs[0];
+                int g = couleurs[1];
+                int b = couleurs[2];
+                //mettre R,G ou B ici
+                imgCopie.setRGB(i, j, new Color(0,g,b).getRGB());
             }
         }
 
@@ -44,4 +43,3 @@ public class Main_Q3 {
         return new int[]{red, green, blue};
     }
 }
-
