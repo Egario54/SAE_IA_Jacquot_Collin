@@ -3,7 +3,6 @@ package Partie3_SolutionSAE;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static Partie3_SolutionSAE.MainSolutionSAE.separerRGB;
 
 public class Distance {
     public Long distance(BufferedImage i1, BufferedImage i2) {
@@ -20,6 +19,12 @@ public class Distance {
             }
         }
         return Math.round(distance);
+    }
+    public static int[] separerRGB(int color) {
+        int blue = color & 0xff;
+        int green = (color& 0xff00) >> 8;
+        int red = (color & 0xff0000) >> 16;
+        return new int[]{red, green, blue};
     }
 
     public static Long distanceCouleurs(Color i1, Color i2) {

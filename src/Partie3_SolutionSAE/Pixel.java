@@ -6,11 +6,13 @@ public class Pixel {
     private int x;
     private int y;
     private Color col;
+    private int frequence;
 
     public Pixel(int x, int y, Color c){
         this.x = x;
         this.y = y;
         this.col = c;
+        this.frequence = 1;
     }
 
     public int getX() {
@@ -19,6 +21,14 @@ public class Pixel {
 
     public int getY() {
         return y;
+    }
+
+    public int getFrequence() {
+        return frequence;
+    }
+
+    public void augmenterFrequence(){
+        frequence++;
     }
 
     public Color getColor() {
