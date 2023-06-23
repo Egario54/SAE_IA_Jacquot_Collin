@@ -1,0 +1,24 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Calcul {
+  + Calcul():
+  + DonnerCouleursPresentes(BufferedImage, int): Color[]
+  + DonnerCouleurPixel(BufferedImage, int, int, Color[]): Color
+}
+class Distance {
+  + Distance():
+  + distance(BufferedImage, BufferedImage): Long
+  + distanceCouleurs(Color, Color): Long
+}
+class MainSolutionPerso {
+  + MainSolutionPerso():
+  + main(String[]): void
+}
+
+Calcul             -[#595959,dashed]->  Distance          : "«create»"
+MainSolutionPerso  -[#595959,dashed]->  Calcul            : "«create»"
+@enduml

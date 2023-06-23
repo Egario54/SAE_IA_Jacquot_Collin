@@ -1,0 +1,30 @@
+@startuml
+
+
+participant MainSolutionPerso
+participant File
+participant BufferedImage
+participant Calcul
+participant Color
+participant ColorTab
+
+MainSolutionPerso -> File: instanciation(file)
+MainSolutionPerso -> BufferedImage: instanciation(copie)
+MainSolutionPerso -> Calcul: instanciation(couleurs)
+MainSolutionPerso -> ColorTab: instanciation(tabCouleurs)
+
+MainSolutionPerso -> File: lire(file)
+MainSolutionPerso -> BufferedImage: obtenirDimensions(copie)
+MainSolutionPerso -> Calcul: DonnerCouleursPresentes(copie, nbCouleurs) -> tabCouleurs
+MainSolutionPerso <-- Calcul: tabCouleurs
+
+loop Pour chaque pixel de l'image
+    MainSolutionPerso -> Calcul: DonnerCouleurPixel(copie, i, j, tabCouleurs) <-- colorIJ
+    MainSolutionPerso <-- Calcul : colorIJ
+    MainSolutionPerso -> BufferedImage: modifierPixel(imgCopie, i, j, colorIJ)
+end
+
+MainSolutionPerso -> File: écrire(imgCopie, "jpg", new File("img/Output/Part3.jpg")) -> b
+MainSolutionPerso <-- File: b
+
+@enduml
