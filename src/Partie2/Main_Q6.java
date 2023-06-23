@@ -18,8 +18,7 @@ public class Main_Q6 {
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 BufferedImage image = read(file);
-                // donnes les distances en nombres entiers sans puissance de 10
-                System.out.println(file.getName() + " : " + distance.distance(originale, image));
+                System.out.println("distance(originale.jpg, " + file.getName() + ") = " + distance.distance(originale, image));
             }
         }
     }
