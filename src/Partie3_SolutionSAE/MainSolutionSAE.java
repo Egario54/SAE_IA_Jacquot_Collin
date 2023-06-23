@@ -4,10 +4,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static javax.imageio.ImageIO.read;
 import static javax.imageio.ImageIO.write;
@@ -23,22 +21,23 @@ public class MainSolutionSAE {
         BufferedImage imgCopie = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
 
         //Création d'une map des couleurs possibles de l'image
-        List<,Pixel> couleurs = new HashMap<>();
+        Map<Pixel,Integer> couleurs = new HashMap<>();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if(!couleurs.containsKey(image.getRGB(i,j))){
-                    couleurs.put(1,new Pixel(i,j,new Color(image.getRGB(i,j))));
+                Pixel p = new Pixel(i,j,new Color(image.getRGB(i,j)));
+                if(!couleurs.containsKey(p)){
+                    couleurs.put(p,1);
+                }
+                //L'integer sert à faire un classement de couleurs pour en avoir une fréquence
+                else {
+                    couleurs.put(p,couleurs.get(p)+1);
                 }
             }
         }
-        //Faire un classement de la fréquence d'apparition de la couleur
-
 
         //Application de l'algorithme KMeans
         int nbGroupes= 10;
-        KMeans(couleurs, nbGroupes);
-
-
+        KMeans(couleurs, nbGroupes, width, height);
 
         //écrire le résultat
         boolean b = write(imgCopie, "jpg", new File("img/Output/copie.jpg"));
@@ -49,29 +48,56 @@ public class MainSolutionSAE {
         }
     }
 
-    public static void KMeans(Map<Integer,Pixel> couleurs, int nbGroupes){
+    public static void KMeans(Map<Pixel,Integer> couleurs, int nbGroupes, int width, int height){
         //Initialisation des centroïdes
         List<int[]> centroides = new ArrayList<>();
         for (int i = 0; i < nbGroupes; i++) {
-            centroides[i]=
+            centroides.add(new int[]{(int) (Math.random()*width),(int) (Math.random()*height)});
         }
         //Boucle principale
         boolean nonFini = false;
         while(!nonFini){
+            Map<Integer[], List<Integer[]>> groupes = new HashMap<>();
             //On initialise les groupes
             for (int i = 0; i < nbGroupes; i++) {
-                
+                groupes.put(new Integer[]{centroides.get(i)[0],centroides.get(i)[1]}, null);
             }
             //On construit ces groupes
-            for (int i = 0; i < ; i++) {
-
+            Pixel[] pixels = couleurs.keySet().toArray(new Pixel[0]);
+            for (int i = 0; i < couleurs.size(); i++) {
+                //On associe la seconde valeur des groupes
+                int[] centroïde = associerCentroide(new int[]{pixels[i].getX(),pixels[i].getY()}, centroides);
+                //
+                groupes.
+                distance =
             }
             //On met à jour les centroïdes
             for (int i = 0; i < nbGroupes; i++) {
-                centroides[i]
+                centroides.set(i, barycentre(groupes.get(centroides.get(i))));
             }
         }
 
+    }
+
+    /**
+     * Cherche le centroïde le plus proche
+     * @param donnee la donnée concernée (un pixel)
+     * @param centroides
+     * @return le centroide sélectionné
+     */
+    private static int[] associerCentroide(int [] donnee, List<int[]> centroides) {
+
+        return
+    }
+
+    private static int[] barycentre(List<Integer[]> ensemblePoints) {
+        int x=0;
+        int y=0;
+        for (Integer[] ensemblePoint : ensemblePoints) {
+            x += ensemblePoint[0];
+            y += ensemblePoint[1];
+        }
+        return new int[]{Math.round((float) x / ensemblePoints.size()), Math.round((float) y / ensemblePoints.size())};
     }
 
     public static int[] separerRGB(int color) {
@@ -81,27 +107,3 @@ public class MainSolutionSAE {
         return new int[]{red, green, blue};
     }
 }
-
-/**
- * commented code
- Color[] couleursDispo = new Color[2];
- couleursDispo[0] = Color.BLACK;
- couleursDispo[1] = Color.WHITE;
-
- for(int i = 0; i<width; i++){
- for(int j = 0; j<height; j++){
- int[] couleurs = separerRGB(copie.getRGB(i,j));
- double[] distance = new double[couleursDispo.length];
- for (int k = 0; k < distance.length; k++) {
- distance[k]= (Math.pow(couleurs[0]-couleursDispo[k].getRed(),2))
- +(Math.pow(couleurs[1]-couleursDispo[k].getGreen(),2))
- +(Math.pow(couleurs[2]-couleursDispo[k].getBlue(),2));
- }
- System.out.println(distance[0] + " , " + distance[1]);
- if(distance[0]<distance[1]){
- imgCopie.setRGB(i, j, couleursDispo[0].getRGB());
- } else imgCopie.setRGB(i, j, couleursDispo[1].getRGB());
-
- }
- }
- */
