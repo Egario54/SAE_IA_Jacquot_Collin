@@ -23,8 +23,12 @@ public class MainSolutionSAE {
 
         try {
             BufferedImage original = ImageIO.read(new File(path));
+            long startTime = System.nanoTime();
             BufferedImage copie = effectuerCopie(original, k);
             ImageIO.write(copie, "jpg", new File("img/Output/copie.jpg"));
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime);
+            System.out.println("Temps d'exécution : " + duration + " nanosecondes");
         } catch (IOException e) {
             e.printStackTrace();
         }

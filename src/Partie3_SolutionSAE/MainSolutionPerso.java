@@ -11,7 +11,7 @@ import static javax.imageio.ImageIO.write;
 public class MainSolutionPerso {
 
     public static void main(String[] args) throws IOException {
-        int nbCouleurs = 1500;
+        int nbCouleurs = 50;
         if (args.length > 0) {
             nbCouleurs = Integer.parseInt(args[0]);
         }
@@ -20,6 +20,7 @@ public class MainSolutionPerso {
         int width = copie.getWidth();
         int height = copie.getHeight();
         BufferedImage imgCopie = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+        long startTime = System.nanoTime();
         Calcul couleurs = new Calcul();
 
         Color[] tabCouleurs = couleurs.DonnerCouleursPresentes(copie, nbCouleurs);
@@ -36,5 +37,8 @@ public class MainSolutionPerso {
         } else {
             System.out.println("Copie échouée");
         }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+         System.out.println("Temps d'exécution : " + duration + " nanosecondes");
     }
 }
